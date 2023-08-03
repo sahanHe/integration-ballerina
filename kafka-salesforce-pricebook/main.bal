@@ -1,12 +1,12 @@
 import ballerinax/kafka;
-import ballerina/log;
+import ballerina/io;
 import ballerinax/salesforce as sfdc;
 
-
+const string PRICEBOOKID = "";
 configurable SalesforceOAuth2Config salesforceOAuthConfig = ?;
 configurable string salesforceBaseUrl = ?;
 public type ProductPrice readonly & record {
-    string pricebookEntryId;
+    string Name;
     float UnitPrice;
 };
 
@@ -40,9 +40,11 @@ sfdc:Client sfdcClient = check new ({
 service on orderListener {
     remote function onConsumerRecord(ProductPrice[] prices) returns error? {
         foreach ProductPrice price in prices {
-            log:printInfo(string `Received price change ${price.UnitPrice}`);
+            stream<record{},error?> retrievedStream = check sfdcClient->query(string `SELECT Id FROM PricebookEntry WHERE Pricebook2Id = '${PRICEBOOKID}' AND Name = '${price.Name}'`);
+            record{}[] retrieved = check from record{} entry in retrievedStream select entry;
+            string pricebookEntryId = <string>retrieved[0]["Id"];
             ProductPriceUpdate updatedPrice = {UnitPrice: price.UnitPrice};
-            check sfdcClient->update("PricebookEntry", price.pricebookEntryId, updatedPrice);
+            check sfdcClient->update("PricebookEntry", pricebookEntryId, updatedPrice);
         }
     }
 }
