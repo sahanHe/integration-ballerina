@@ -1,5 +1,6 @@
 spreadsheetId = ""
 worksheetName = ""
+duplicateWorksheetName = ""
 salesforceBaseUrl = ""
 
 [choreo.gsheet_new_row_to_sfdc_new_lead.GSheetOAuthConfig]

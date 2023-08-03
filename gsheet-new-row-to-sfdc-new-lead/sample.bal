@@ -23,6 +23,7 @@ const int HEADINGS_ROW = 1;
 // Google sheets configuration parameters
 configurable string spreadsheetId = ?;
 configurable string worksheetName = ?;
+configurable string duplicateWorksheetName = ?;
 configurable GSheetOAuth2Config GSheetOAuthConfig = ?;
 
 // Salesforce configuration parameters
@@ -53,16 +54,25 @@ sfdc:Client sfdcClient = check new ({
 
 
 public function main() returns error? {
-    sheets:Range range = check sheetsClient->getRange(spreadsheetId, worksheetName, "A1:G5");
+    sheets:Range range = check sheetsClient->getRange(spreadsheetId, worksheetName, "A1:G");
     (int|string|decimal)[] headers = range.values[0];
     foreach (int|string|decimal)[] item in range.values.slice(1) {
-        map<json> newLead = {};
-        foreach int|string|decimal header in headers {
-            newLead[header.toString()] = item[<int>headers.indexOf(header)];
+        int? indexOfEmail = headers.indexOf("Email");
+        if indexOfEmail is () {
+            return error("Email column not found");
         }
-        string createLeadResponse = check sfdcClient->createLead(newLead);
-        log:printInfo(string `Lead created successfully!. Lead ID : ${createLeadResponse}`);
-    
+        stream<record{},error?> retrievedStream = check sfdcClient->query(string `select Id, Email from Contact WHERE Email='${item[<int>indexOfEmail]}'`);
+        if retrievedStream.next() !is () {
+            log:printInfo(string `Contact already exists. Email : ${item[<int>indexOfEmail]}`);
+            check sheetsClient->appendRowToSheet(spreadsheetId, duplicateWorksheetName, item);
+            continue;
+        }
+        record{} newContact = {};
+        foreach int|string|decimal header in headers {
+            newContact[header.toString()] = item[<int>headers.indexOf(header)];
+        }
+        sfdc:CreationResponse createLeadResponse = check sfdcClient->create("Contact", newContact);
+        log:printInfo(string `Contact created successfully!. Email : ${item[<int>indexOfEmail]}`);
     }
         
 }
