@@ -1,4 +1,4 @@
-Use template (Salesforce New Contact to Twilio SMS) to send a Twilio SMS for every new Salesforce Contact.
+Example to send a Twilio SMS for every new Salesforce Contact.
 
 ## Use case
 A customer can use Twilio to send internal notifications to a specific person based on the new contact information in
