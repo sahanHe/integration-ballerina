@@ -1,7 +1,11 @@
 Example to create a new product in the Salesforce using MySQL and Salesforce integration.
 
 ## Use case
-MySQL is an open-source relational database management system which can be easily used for data storing and retrieving applications. By using this integration, we can easily create a product in the Salesforce using MySQL and Salesforce integration. This template can be used to create the product in the Salesforce.
+MySQL is an open-source relational database management system which can be easily used for data storing and retrieving applications. 
+
+Organizations maintain details about products in various data stores such as ERP systems, databases, etc. These data stores could be updated by different business units. It is important to keep Salesforce up to date about organizations current product line up, so that sales staff can effectively promote and sell valid products.
+
+Following sample demonstrates a scenario of creating products in Salesforce with product details fetched from a MySQL database.
 
 ## Prerequisites
 * Salesforce account

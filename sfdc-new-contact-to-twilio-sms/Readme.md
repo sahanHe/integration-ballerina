@@ -1,12 +1,11 @@
 Example to send a Twilio SMS for every new Salesforce Contact.
 
 ## Use case
-A customer can use Twilio to send internal notifications to a specific person based on the new contact information in
-Salesforce. There might be a specific person who needs to be alerted once a new contact is added in Salesforce. Once a
-new contact is created in Salesforce, a Twilio SMS containing all the defined fields in the contact SObject will be sent.
-Any time you create a new contact in Salesforce, an SMS message will automatically send to the specific person via Twilio.
-This template is used for the scenario that once a contact is created in Salesforce, Twilio SMS containing all the
-defined fields in contact SObject will be sent.
+Twilio is a cloud communications platform as a service (CPaaS) company. It allows software developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs. 
+
+As most of the organizations maintains a well organized sales process, it is important to follow up with leads as soon as they are added in Salesforce. There maybe a specific person who wanted to be on alert of new Salesforce leads. Any time you create a new lead in Salesforce, an SMS message will automatically send to the specific person via Twilio. 
+
+The following sample demonstrates a scenario in which a Twilio SMS message containing all the defined fields in lead SObject is sent to a given mobile number when a new lead is created in Salesforce.
 
 ## Prerequisites
 * Pull the template from central  

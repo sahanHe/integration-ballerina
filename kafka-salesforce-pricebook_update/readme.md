@@ -1,7 +1,11 @@
 Example to update the product price in the Salesforce pricebook using Kafka and Salesforce integration.
 
 ## Use case
-Apache Kafka is a distributed event store and stream-processing platform which is widely used for enterprise messaging applications. By using this integration, we can easily update the product price in the Salesforce pricebook using Kafka and Salesforce integration. This template can be used to update the product price in the Salesforce pricebook when a new message is received in the Kafka topic.
+Apache Kafka is a distributed event store and stream-processing platform, widely used for enterprise messaging applications.
+
+Organizations maintain details about products in various data stores such as ERP systems, databases, etc. These data stores can be updated by different business units. As these updates roll out, it's important to implement reliable communication between all such business units and data stores so that data is updated consistently across all systems.
+
+The following sample demonstrates a scenario in which a product's price in a price book in Salesforce is updated with product details fetched from a Kafka topic whenever a new message is received.
 
 ## Prerequisites
 * Salesforce account
